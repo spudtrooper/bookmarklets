@@ -18,9 +18,10 @@ import (
 )
 
 var (
-	jsDir   = flag.String("js_dir", "js", "The input directory of JS files")
-	outfile = flag.String("outfile", "bookmarklets.html", "The output HTML file")
-	titleRE = regexp.MustCompile(`@Title: (.*)$`)
+	jsDir       = flag.String("js_dir", "js", "The input directory of JS files")
+	outfileHTML = flag.String("outfile_html", "bookmarklets.html", "The output HTML file")
+	outfileMD   = flag.String("outfile_md", "bookmarklets.md", "The output Markdown file")
+	titleRE     = regexp.MustCompile(`@Title: (.*)$`)
 )
 
 func minityJs(f string) (string, error) {
@@ -55,6 +56,61 @@ func fileTitle(f string) (string, error) {
 	return res, nil
 }
 
+type titledJS struct {
+	Title, JS string
+}
+
+func genIndexHTML(titledJSs []titledJS) ([]byte, error) {
+	tmpl, err := template.New("html").Parse(`
+<html>
+<body>	
+<h1>Bookmarklets</h1>
+<ul>
+{{ range $index, $p := .TitledJSs }}
+		<li><a href="javascript:{{$p.JS}}">{{$p.Title}}</a></li>
+{{end}}
+</ul>
+</body>
+</html>
+		`)
+	if err != nil {
+		return nil, err
+	}
+	var data = struct {
+		TitledJSs []titledJS
+	}{
+		TitledJSs: titledJSs,
+	}
+	var out bytes.Buffer
+	if err = tmpl.Execute(&out, data); err != nil {
+		return nil, err
+	}
+	return out.Bytes(), nil
+}
+
+func genIndexMD(titledJSs []titledJS) ([]byte, error) {
+	tmpl, err := template.New("md").Parse(`
+# Bookmarklets
+
+	{{ range $index, $p := .TitledJSs }}
+*	[{{$p.Title}}](javascript:{{$p.JS}})
+	{{end}}
+		`)
+	if err != nil {
+		return nil, err
+	}
+	var data = struct {
+		TitledJSs []titledJS
+	}{
+		TitledJSs: titledJSs,
+	}
+	var out bytes.Buffer
+	if err = tmpl.Execute(&out, data); err != nil {
+		return nil, err
+	}
+	return out.Bytes(), nil
+}
+
 func generateIndex() error {
 	jsFiles, err := filepath.Glob(path.Join(*jsDir, "*.js"))
 	if err != nil {
@@ -75,10 +131,6 @@ func generateIndex() error {
 	}
 	sort.Strings(files)
 
-	type titledJS struct {
-		Title, JS string
-	}
-
 	var titledJSs []titledJS
 	for _, f := range files {
 		title, err := fileTitle(f)
@@ -89,33 +141,26 @@ func generateIndex() error {
 		titledJSs = append(titledJSs, p)
 	}
 
-	data := struct {
-		TitledJSs []titledJS
-	}{
-		TitledJSs: titledJSs,
-	}
-	var out bytes.Buffer
-	tmpl, err := template.New("index").Parse(`
-<html>
-<boody>
-<ul>
-{{ range $index, $p := .TitledJSs }}
-     <li><a href="javascript:{{$p.JS}}">{{$p.Title}}</a></li>
-{{end}}
-</ul>
-</body>
-</html>
-	`)
-	if err != nil {
-		return err
-	}
-	if err = tmpl.Execute(&out, data); err != nil {
-		return err
+	if *outfileHTML != "" {
+		out, err := genIndexHTML(titledJSs)
+		if err != nil {
+			return err
+		}
+		log.Printf("Writing to %s\n", *outfileHTML)
+		if err := ioutil.WriteFile(*outfileHTML, out, 0755); err != nil {
+			return err
+		}
 	}
 
-	log.Printf("Writing to %s\n", *outfile)
-	if err := ioutil.WriteFile(*outfile, out.Bytes(), 0755); err != nil {
-		return err
+	if *outfileMD != "" {
+		out, err := genIndexMD(titledJSs)
+		if err != nil {
+			return err
+		}
+		log.Printf("Writing to %s\n", *outfileMD)
+		if err := ioutil.WriteFile(*outfileMD, out, 0755); err != nil {
+			return err
+		}
 	}
 
 	return nil
