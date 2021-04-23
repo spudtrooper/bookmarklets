@@ -94,7 +94,7 @@ func genIndexMD(titledJSs []titledJS) ([]byte, error) {
 # Bookmarklets
 
 	{{ range $index, $p := .TitledJSs }}
-*	[{{$p.Title}}](javascript:{{$p.JS}}) ([src]($p.Link))
+*	[{{$p.Title}}](javascript:{{$p.JS}}) ([src]({{$p.Link}}))
 	{{end}}
 		`)
 	if err != nil {
