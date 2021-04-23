@@ -2,4 +2,17 @@
 
 go run generate_index.go
 
-cp bookmarklets.md ../spudtrooper.github.io/bookmarklets/index.md
+outdir=../spudtrooper.github.io
+cp bookmarklets.md $outdir/bookmarklets/index.md
+
+if [[ "$@" != "" ]]; then
+    echo "Copied to $outdir...committing..."
+    pushd $outdir
+    scripts/commit.sh
+    popd
+else
+    echo "Copied to $outdir...run the following to commit"
+    echo
+    echo "  pushd $outdir && scripts/commit.sh && popd"
+    echo
+fi

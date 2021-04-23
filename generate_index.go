@@ -4,6 +4,7 @@ package main
 import (
 	"bytes"
 	"flag"
+	"fmt"
 	"html/template"
 	"io/ioutil"
 	"log"
@@ -57,7 +58,7 @@ func fileTitle(f string) (string, error) {
 }
 
 type titledJS struct {
-	Title, JS string
+	Title, JS, Link string
 }
 
 func genIndexHTML(titledJSs []titledJS) ([]byte, error) {
@@ -67,7 +68,7 @@ func genIndexHTML(titledJSs []titledJS) ([]byte, error) {
 <h1>Bookmarklets</h1>
 <ul>
 {{ range $index, $p := .TitledJSs }}
-		<li><a href="javascript:{{$p.JS}}">{{$p.Title}}</a></li>
+		<li><a href="javascript:{{$p.JS}}">{{$p.Title}}</a> (<a target="_" href="{{$p.Link}}">src</a>)</li>
 {{end}}
 </ul>
 </body>
@@ -93,7 +94,7 @@ func genIndexMD(titledJSs []titledJS) ([]byte, error) {
 # Bookmarklets
 
 	{{ range $index, $p := .TitledJSs }}
-*	[{{$p.Title}}](javascript:{{$p.JS}})
+*	[{{$p.Title}}](javascript:{{$p.JS}}) ([src]($p.Link))
 	{{end}}
 		`)
 	if err != nil {
@@ -137,8 +138,14 @@ func generateIndex() error {
 		if err != nil {
 			return err
 		}
-		p := titledJS{Title: title, JS: minifiedFiles[f]}
-		titledJSs = append(titledJSs, p)
+		link := fmt.Sprintf("https://github.com/spudtrooper/bookmarklets/blob/main/js/%s", path.Base(f))
+		js := minifiedFiles[f]
+		t := titledJS{
+			Title: title,
+			JS:    js,
+			Link:  link,
+		}
+		titledJSs = append(titledJSs, t)
 	}
 
 	if *outfileHTML != "" {
