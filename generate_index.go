@@ -19,10 +19,10 @@ import (
 )
 
 var (
-	jsDir       = flag.String("js_dir", "js", "The input directory of JS files")
-	outfileHTML = flag.String("outfile_html", "bookmarklets.html", "The output HTML file")
-	outfileMD   = flag.String("outfile_md", "bookmarklets.md", "The output Markdown file")
-	titleRE     = regexp.MustCompile(`@Title: (.*)$`)
+	jsDir         = flag.String("js_dir", "js", "The input directory of JS files")
+	outfileHTML   = flag.String("outfile_html", "output/bookmarklets.html", "The output HTML file")
+	outfileMD     = flag.String("outfile_md", "output/bookmarklets.md", "The output Markdown file")
+	baseSourceURL = flag.String("base_source_url", "https://github.com/spudtrooper/bookmarklets/blob/main/js", "The base source URL when linking to the source files")
 )
 
 func minityJs(f string) (string, error) {
@@ -40,37 +40,73 @@ func minityJs(f string) (string, error) {
 	return w.String(), nil
 }
 
-func fileTitle(f string) (string, error) {
+type fileMetadata struct {
+	title, description string
+}
+
+var (
+	titleRE = regexp.MustCompile(`.*@Title:(.*)$`)
+	descrRE = regexp.MustCompile(`.*@Description:(.*)$`)
+)
+
+func titleFromFileName(f string) string {
+	ext := path.Ext(f)
+	base := path.Base(f)
+	titleBase := base[0 : len(base)-len(ext)]
+	parts := strings.Split(titleBase, "-")
+	output := []string{}
+	for _, p := range parts {
+		cap := strings.Title(strings.ToLower(p))
+		output = append(output, cap)
+
+	}
+	return strings.Join(output, " ")
+}
+
+func findFileMetadata(f string) (*fileMetadata, error) {
 	b, err := ioutil.ReadFile(f)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
+	var title string
+	var descr string
 	lines := strings.Split(string(b), "\n")
 	for _, s := range lines {
 		if m := titleRE.FindStringSubmatch(s); m != nil && len(m) == 2 {
-			return m[1], nil
+			title = strings.TrimSpace(m[1])
+		} else if m := descrRE.FindStringSubmatch(s); m != nil && len(m) == 2 {
+			descr = strings.TrimSpace(m[1])
 		}
 	}
-	ext := path.Ext(f)
-	base := path.Base(f)
-	res := base[0 : len(base)-len(ext)]
+	if title == "" {
+		title = titleFromFileName(f)
+	}
+	res := &fileMetadata{
+		title:       title,
+		description: descr,
+	}
 	return res, nil
 }
 
 type titledJS struct {
-	Title, JS, Link string
+	Title, Description, JS, Link string
 }
 
 func genIndexHTML(titledJSs []titledJS) ([]byte, error) {
 	tmpl, err := template.New("html").Parse(`
 <html>
 <body>	
-<h1>Bookmarklets</h1>
-<ul>
-{{ range $index, $p := .TitledJSs }}
-		<li><a href="javascript:{{$p.JS}}">{{$p.Title}}</a> (<a target="_" href="{{$p.Link}}">src</a>)</li>
-{{end}}
-</ul>
+	<h1>Bookmarklets</h1>
+	<p>
+		To install, drag the links not titled 'src' to your toolbar.
+	</p>
+	<p>
+		<ul>
+		{{range $index, $p := .TitledJSs}}
+				<li><a href="javascript:{{$p.JS}}">{{$p.Title}}</a> (<a target="_" href="{{$p.Link}}">src</a>) - {{$p.Description}}</li>
+		{{end}}
+		</ul>
+	</p>
 </body>
 </html>
 		`)
@@ -93,9 +129,11 @@ func genIndexMD(titledJSs []titledJS) ([]byte, error) {
 	tmpl, err := template.New("md").Parse(`
 # Bookmarklets
 
-	{{ range $index, $p := .TitledJSs }}
-*	[{{$p.Title}}](javascript:{{$p.JS}}) ([src]({{$p.Link}}))
-	{{end}}
+To install, drag the links not titled 'src' to your toolbar.
+
+{{range $index, $p := .TitledJSs}}
+*	[{{$p.Title}}](javascript:{{$p.JS}}) ([src]({{$p.Link}})) - {{$p.Description}}
+{{end}}
 		`)
 	if err != nil {
 		return nil, err
@@ -126,27 +164,28 @@ func generateIndex() error {
 		minifiedFiles[f] = minified
 	}
 
-	var files []string
-	for f := range minifiedFiles {
-		files = append(files, f)
-	}
-	sort.Strings(files)
-
 	var titledJSs []titledJS
-	for _, f := range files {
-		title, err := fileTitle(f)
+	for f := range minifiedFiles {
+		metadata, err := findFileMetadata(f)
 		if err != nil {
 			return err
 		}
-		link := fmt.Sprintf("https://github.com/spudtrooper/bookmarklets/blob/main/js/%s", path.Base(f))
+		link := fmt.Sprintf(*baseSourceURL+"/%s", path.Base(f))
 		js := minifiedFiles[f]
+		title := metadata.title
+		descr := metadata.description
 		t := titledJS{
-			Title: title,
-			JS:    js,
-			Link:  link,
+			Title:       title,
+			Description: descr,
+			JS:          js,
+			Link:        link,
 		}
 		titledJSs = append(titledJSs, t)
 	}
+
+	sort.Slice(titledJSs, func(i, j int) bool {
+		return titledJSs[i].Title < titledJSs[j].Title
+	})
 
 	if *outfileHTML != "" {
 		out, err := genIndexHTML(titledJSs)

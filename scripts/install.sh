@@ -1,9 +1,16 @@
 #!/bin/sh
+#
+# Generates the index and copies to my githubio directory. To commit, pass
+# anything as arguments, e.g.
+#
+#   $ ./scripts/install.sh asdf
+#
+set -e
 
-go run generate_index.go
+$(dirname $0)/gen.sh
 
 outdir=../spudtrooper.github.io
-cp bookmarklets.md $outdir/bookmarklets/index.md
+cp output/bookmarklets.md $outdir/bookmarklets/index.md
 
 if [[ "$@" != "" ]]; then
     echo "Copied to $outdir...committing..."
