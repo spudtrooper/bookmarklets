@@ -7,7 +7,7 @@ import (
 	"path"
 	"path/filepath"
 
-	"./bookmarkletgen"
+	"github.com/spudtrooper/bookmarkletgen"
 )
 
 var (
