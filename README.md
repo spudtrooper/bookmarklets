@@ -5,12 +5,12 @@
 To generate index:
 
 ```
-go run generate_index.go
+scripts/gen.sh
 ```
 
 This generates [bookmarklets.html](bookmarklets.html).
 
-## Usage for Jeff
+To install:
 
 ```
 ./install.sh

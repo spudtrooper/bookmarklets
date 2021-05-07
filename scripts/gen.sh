@@ -4,4 +4,18 @@
 #
 set -e
 
-go run generate_index.go
+# Pre: 
+#
+#  go get -u -f github.com/spudtrooper/bookmarkletindex
+#
+args=(
+    --base_source_url
+    https://github.com/spudtrooper/bookmarklets/blob/main/js
+    --js_dir
+    js
+    --outfile_html
+    output/bookmarklets.html
+    --outfile_md
+    output/bookmarklets.md
+)
+bookmarkletindex "${args[@]}"
