@@ -10,7 +10,6 @@ set -e
 $(dirname $0)/gen.sh
 
 outdir=../spudtrooper.github.io
-cp output/bookmarklets.md $outdir/bookmarklets/index.md
 cp output/bookmarklets.html $outdir/bookmarklets/index.html
 
 if [[ "$@" != "" ]]; then
