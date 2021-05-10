@@ -15,5 +15,3 @@ To install:
 ```
 ./install.sh
 ```
-
-
