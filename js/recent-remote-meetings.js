@@ -1,7 +1,6 @@
 /*
  * @Title: Find Soonest Remote Meeting
  * @Description: Scrolls to the soonest or most recent meetings in https://www.nyintergroup.org/remote-meetings/list/.
- *
  */
 (function() {
   function pad(n) {
