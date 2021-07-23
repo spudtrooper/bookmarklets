@@ -18,4 +18,4 @@ args=(
     --outfile_md
     output/bookmarklets.md
 )
-bookmarkletindex "${args[@]}"
+go run bookmarkletindex.go "${args[@]}"
