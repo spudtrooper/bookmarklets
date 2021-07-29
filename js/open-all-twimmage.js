@@ -2,7 +2,6 @@
  * @Title: Twimmage Open All
  * @Description: Open links from twimmage auto output
  */
-// javascript:void function(){function e(){var e=document.getElementsByTagName("md-card");console.log(e.length+" md-cards"),e&&e.length||(e=document.getElementsByTagName("card")),console.log(e.length+" cards");for(var t=null,n=0;n<e.length;n++){var a=e[n],r=a.getElementsByClassName("card-title-text ng-binding");if(r&&r.length){var l=r[0].innerText.trim();if("twitterScreenName"==l){t=a;break}}}if(t){for(var o=t.getElementsByClassName("table-body")[0],g=o.getElementsByTagName("text"),i=[],n=0;n<g.length;n++){var c=g[n];if(c.innerHTML){var m=c.innerHTML.trim();/^[0-9]+$/.test(m)||i.push(m)}}return i}}function t(t){for(var n=e(),a=0;a<n.length;a++){var r=t.call(null,n[a]);window.open(r,"_"+a)}}function n(){function e(e){return"https://instagram.com/"+e}t(e)}try{n()}catch(a){alert(a),console.log(a)}}();
 (function() { 
   function findLinks() {
     let els = document.getElementsByTagName('a');
