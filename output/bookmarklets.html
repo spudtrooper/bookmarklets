@@ -1,53 +1,81 @@
 
-<html>
-<body>	
-	<h1>Bookmarklets</h1>
-	<p>
-		To install, drag the links not titled 'src' to your toolbar.
-	</p>
-	<p>
-		<ul>
-		
-				<li><a href="javascript:(function(){function findEls(){let els=[];Array.from(document.getElementsByTagName('span')).forEach((el,i)=>{if(el.className=='result-title'){els.push(el);}});els.sort((a,b)=>{let fst=a.innerText.toLowerCase();let snd=b.innerText.toLowerCase();if(fst<snd){return-1;}
+	<html>
+	<body>	
+		<h1>Bookmarklets</h1>
+		<p>
+			To install, drag the links not titled 'src' to your toolbar.
+		</p>
+		<p>
+			<ul>
+			
+					<li>
+						<a href="javascript:(function(){function findEls(){let els=[];Array.from(document.getElementsByTagName('span')).forEach((el,i)=>{if(el.className=='result-title'){els.push(el);}});els.sort((a,b)=>{let fst=a.innerText.toLowerCase();let snd=b.innerText.toLowerCase();if(fst<snd){return-1;}
 if(snd<fst){return 1;}
 return 0;});return els;}
 function createBox(els){let box=document.getElementById('_box_');if(box){box.parentNode.removeChild(box);}
 box=document.createElement('div');box.id='_box_';Object.assign(box.style,{'position':'fixed','top':'10px','right':'10px','padding':'10px','minWidth':'550px','maxWidth':'550px','minHeight':'800px','maxHeight':'800px','backgroundColor':'#ddd','zIndez':'1000000000','border':'1px solid black','overflow':'auto',});document.body.append(box);let closeBtn=document.createElement('a');box.append(closeBtn);closeBtn.innerText='close';closeBtn.href='#';Object.assign(closeBtn.style,{'margin-bottom':'20px',});closeBtn.addEventListener('click',function(){box.parentNode.removeChild(box);});let list=document.createElement('ol');box.appendChild(list);for(let i=0;i<els.length;i++){let el=els[i];let link=document.createElement('a');link.innerText=el.innerText;link.href='#';link.addEventListener('click',function(el){window.scrollTo(document.body,el.offsetTop,250);}.bind(null,el));let listItem=document.createElement('li');listItem.appendChild(link);list.appendChild(listItem);}}
 function main(){let els=findEls();createBox(els);}
-main();})();">Congress Show Titles</a> (<a target="_" href="https://github.com/spudtrooper/bookmarklets/blob/main/js/congress-show-titles.js">src</a>) - Shows a box with the titles of bills returned from a search on congress.gov</li>
-		
-				<li><a href="javascript:(function(){function pad(n){return n<10?'0'+n:String(n);}
+main();})();">Congress Show Titles</a> (<a target="_" href="https://github.com/spudtrooper/bookmarklets/blob/main/js/congress-show-titles.js">src</a>) - Shows a box with the titles of bills returned from a search on congress.gov
+						
+							[<a target="_" href="https://imgur.com/a/YrMc4Fk">Context</a>]
+						
+					</li>
+			
+					<li>
+						<a href="javascript:(function(){function pad(n){return n<10?'0'+n:String(n);}
 function getMatchFn(d){let days=['SUNDAY','MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY',];let day=days[d.getDay()];let hours=d.getHours();let amPm='AM';if(hours>12){hours-=12;amPm='PM';}
 let mins;if(d.getMinutes()>=30){mins='30';}else{mins='00';}
 let target=day+' '+hours+':'+mins+' '+amPm;let paddedTarget=day+' '+pad(hours)+':'+mins+' '+amPm;let targets=[target,paddedTarget];return(s)=>{return targets.includes(s);};}
 function findSoonest(){let allEls=Array.from(document.getElementsByTagName('div')).filter(el=>el.id=='arm-time');let matchedEl=null;for(let i=0;i<10;i++){let d=new Date();d.setTime(new Date().getTime()+i*30*60*1000);let matchFn=getMatchFn(d);let els=allEls.filter(el=>matchFn(el.innerText.toUpperCase()));if(els.length){return els[0];}}
 return null;}
 function main(){let el=findSoonest();if(el){el.scrollIntoView();}else{alert('Could not find a meeting now');}}
-main();})();">Find Soonest Remote Meeting</a> (<a target="_" href="https://github.com/spudtrooper/bookmarklets/blob/main/js/recent-remote-meetings.js">src</a>) - Scrolls to the soonest or most recent meetings in https://www.nyintergroup.org/remote-meetings/list/.</li>
-		
-				<li><a href="javascript:(function(){let srcset=document.querySelector('img[sizes="600px"]').getAttribute('srcset');srcset.split(',').map(function(e){let p=e.split(' ');return p[1]+' '+p[0];}).forEach(function(e){console.log(e);});})();">Instagram Sizes</a> (<a target="_" href="https://github.com/spudtrooper/bookmarklets/blob/main/js/instagram-sizes.js">src</a>) - Shows the various sized images for an instagram image. To use: (1) Click on a thumbnail (2) Run this (3) See the output in the dev console.</li>
-		
-				<li><a href="javascript:(function(){function findMax(){let ul=document.getElementsByClassName('pagination-list-container')[0];let li=ul.getElementsByClassName('page gap')[0].nextSibling.nextSibling;let a=li.firstChild.nextSibling;let max=parseInt(a.innerText);let baseUrl=a.href.replace('?page='+max,'');return{max:max,baseUrl:baseUrl,};}
+main();})();">Find Soonest Remote Meeting</a> (<a target="_" href="https://github.com/spudtrooper/bookmarklets/blob/main/js/recent-remote-meetings.js">src</a>) - Scrolls to the soonest or most recent meetings in https://www.nyintergroup.org/remote-meetings/list/.
+						
+					</li>
+			
+					<li>
+						<a href="javascript:(function(){let srcset=document.querySelector('img[sizes="600px"]').getAttribute('srcset');srcset.split(',').map(function(e){let p=e.split(' ');return p[1]+' '+p[0];}).forEach(function(e){console.log(e);});})();">Instagram Sizes</a> (<a target="_" href="https://github.com/spudtrooper/bookmarklets/blob/main/js/instagram-sizes.js">src</a>) - Shows the various sized images for an instagram image. To use: (1) Click on a thumbnail (2) Run this (3) See the output in the dev console.
+						
+					</li>
+			
+					<li>
+						<a href="javascript:(function(){function findMax(){let ul=document.getElementsByClassName('pagination-list-container')[0];let li=ul.getElementsByClassName('page gap')[0].nextSibling.nextSibling;let a=li.firstChild.nextSibling;let max=parseInt(a.innerText);let baseUrl=a.href.replace('?page='+max,'');return{max:max,baseUrl:baseUrl,};}
 function getOrCreate(tag,id,opt_parent){let el=document.getElementById(id);if(!el){el=document.createElement(tag);if(opt_parent){opt_parent.appendChild(el);}}
 return el;}
 function makeRequest(div,maxObj,page){let url=maxObj.baseUrl+'?page='+page;console.log('url',url);var xhttp=new XMLHttpRequest();xhttp.onreadystatechange=function(){if(this.readyState==4&&this.status==200){let text=xhttp.responseText;var el=document.createElement('html');el.innerHTML=text;let cards=el.getElementsByClassName('listingCard listingCard--rentalCard jsItem');for(let j=0;j<cards.length;j++){let li=document.createElement('SPAN');li.style.float='left';li.appendChild(cards[j]);div.appendChild(li);}}};xhttp.open('GET',url,true);xhttp.send();}
 function makeRequests(maxObj){let max=maxObj.max;let div=getOrCreate('SPAN','_listings_',document.body);div.style.width='100%';div.style.display='inline';let loop=(i)=>{console.log('Creating listings for '+i);makeRequest(div,maxObj,i);if(i<=max){setTimeout(function(){loop(i+1);},3000);}else{console.log('done');}};loop(1);}
 function main(){let max=findMax();makeRequests(max);}
-main();})();">Street Easy All</a> (<a target="_" href="https://github.com/spudtrooper/bookmarklets/blob/main/js/streeteasy-all.js">src</a>) - Shows a page of all streeteasy.com listings instead of paging.</li>
-		
-				<li><a href="javascript:(function(){function findLinks(){let els=document.getElementsByTagName('a');let res=[]
+main();})();">Street Easy All</a> (<a target="_" href="https://github.com/spudtrooper/bookmarklets/blob/main/js/streeteasy-all.js">src</a>) - Shows a page of all streeteasy.com listings instead of paging.
+						
+					</li>
+			
+					<li>
+						<a href="javascript:(function(){function findLinks(){let els=document.getElementsByTagName('a');let res=[]
 for(let i=0;i<els.length;i++){let el=els[i];if(el.href&&el.href.match(/^https?:\/\/instagram.com\/[a-zA-Z0-9_]+$/)){res.push(el.href);}}
 return res;}
 function main(){let urls=findLinks();let N=parseInt(window.prompt('Number of results',30));for(let i=0;i<N;i++){let u=urls[i];let n=u.split('/')[u.split('/').length-1];window.open(u,'_'+n);}}
-main();})();">Twimmage Open All</a> (<a target="_" href="https://github.com/spudtrooper/bookmarklets/blob/main/js/open-all-twimmage.js">src</a>) - Open links from twimmage auto output</li>
+main();})();">Twimmage Open All</a> (<a target="_" href="https://github.com/spudtrooper/bookmarklets/blob/main/js/open-all-twimmage.js">src</a>) - Open links from twimmage auto output
+						
+					</li>
+			
+					<li>
+						<a href="javascript:(function(){let divs=document.getElementsByTagName('div');let count=0;for(var i=0;i<divs.length;i++){let div=divs[i];if(div.getAttribute('aria-label')&&div.getAttribute('aria-label').match(/.*\. Like$/)){div.style.backgroundColor='#00ff00';div.click();count++;}}
+window.scrollTo(0,document.body.scrollHeight);console.log('Liked '+count+' tweets');})();">Twitter Like All</a> (<a target="_" href="https://github.com/spudtrooper/bookmarklets/blob/main/js/twitter-like-all.js">src</a>) - Likes all the tweets on a twitter page, then scrolls to the bottom so you can resume.
+						
+					</li>
+			
+					<li>
+						<a href="javascript:(function(){let toc=$('#toc');toc.css('position','fixed');toc.css('right','10px');toc.css('top','90px');toc.css('height','80%');toc.css('overflow','auto');toc.css('display','block');})();">Wikipedia Menu Hover</a> (<a target="_" href="https://github.com/spudtrooper/bookmarklets/blob/main/js/wikipedia-toc.js">src</a>) - Makes wikipedia menus hover and track with the page, e.g. https://imgur.com/a/N6kMzrg.
+						
+					</li>
+			
+			</ul>
+		</p>
 		
-				<li><a href="javascript:(function(){let divs=document.getElementsByTagName('div');let count=0;for(var i=0;i<divs.length;i++){let div=divs[i];if(div.getAttribute('aria-label')&&div.getAttribute('aria-label').match(/.*\. Like$/)){div.style.backgroundColor='#00ff00';div.click();count++;}}
-window.scrollTo(0,document.body.scrollHeight);console.log('Liked '+count+' tweets');})();">Twitter Like All</a> (<a target="_" href="https://github.com/spudtrooper/bookmarklets/blob/main/js/twitter-like-all.js">src</a>) - Likes all the tweets on a twitter page, then scrolls to the bottom so you can resume.</li>
+		<p>
+			[<a href="https://github.com/spudtrooper/bookmarklets">Source</a>]
+		</p>
 		
-				<li><a href="javascript:(function(){let toc=$('#toc');toc.css('position','fixed');toc.css('right','10px');toc.css('top','90px');toc.css('height','80%');toc.css('overflow','auto');toc.css('display','block');})();">Wikipedia Menu Hover</a> (<a target="_" href="https://github.com/spudtrooper/bookmarklets/blob/main/js/wikipedia-toc.js">src</a>) - Makes wikipedia menus hover and track with the page, e.g. https://imgur.com/a/N6kMzrg.</li>
-		
-		</ul>
-	</p>
-</body>
-</html>
-		
+	</body>
+	</html>
+			

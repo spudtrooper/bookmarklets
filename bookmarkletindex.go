@@ -8,7 +8,8 @@ import (
 	"path"
 	"path/filepath"
 
-	"github.com/spudtrooper/bookmarkletgen"
+	"github.com/pkg/errors"
+	"github.com/spudtrooper/bookmarkletgen/bookmarkletgen"
 )
 
 var (
@@ -16,6 +17,7 @@ var (
 	outfileHTML   = flag.String("outfile_html", "", "The output HTML file, e.g. bookmarklets.html")
 	outfileMD     = flag.String("outfile_md", "", "The output Markdown file, e.g. bookmarklets.md")
 	baseSourceURL = flag.String("base_source_url", "", "The base source URL when linking to the source files, e.g. https://github.com/spudtrooper/bookmarklets/blob/main/js")
+	footerHTML    = flag.String("footer_html", "", "HTML to use as a footer")
 )
 
 func generateIndex() error {
@@ -26,12 +28,14 @@ func generateIndex() error {
 	if err != nil {
 		return err
 	}
-	opts := bookmarkletgen.Options{
-		OutfileHTML:   *outfileHTML,
-		OutfileMD:     *outfileMD,
-		BaseSourceURL: *baseSourceURL,
+	if len(jsFiles) == 0 {
+		return errors.Errorf("no js files from %s", *jsDir)
 	}
-	return bookmarkletgen.GenerateIndexFiles(jsFiles, opts)
+	return bookmarkletgen.GenerateIndexFiles(jsFiles,
+		bookmarkletgen.OutfileHTML(*outfileHTML),
+		bookmarkletgen.OutfileMD(*outfileMD),
+		bookmarkletgen.BaseSourceURL(*baseSourceURL),
+		bookmarkletgen.FooterHTML(*footerHTML))
 }
 
 func main() {
