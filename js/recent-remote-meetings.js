@@ -2,11 +2,11 @@
  * @Title: Find Soonest Remote Meeting
  * @Description: Scrolls to the soonest or most recent meetings in https://www.nyintergroup.org/remote-meetings/list/.
  */
-(function() {
+(function () {
   function pad(n) {
-    return n<10 ? '0' + n : String(n);
+    return n < 10 ? '0' + n : String(n);
   }
-  
+
   function getMatchFn(d) {
     let days = [
       'SUNDAY',
@@ -40,11 +40,11 @@
 
   function findSoonest() {
     let allEls = Array.from(document.getElementsByTagName('div'))
-        .filter(el => el.id == 'arm-time');
+      .filter(el => el.id == 'arm-time');
     let matchedEl = null;
     for (let i = 0; i < 10; i++) {
       let d = new Date();
-      d.setTime(new Date().getTime() + i*30*60*1000);
+      d.setTime(new Date().getTime() + i * 30 * 60 * 1000);
       let matchFn = getMatchFn(d);
       let els = allEls.filter(el => matchFn(el.innerText.toUpperCase()));
       if (els.length) {
@@ -53,7 +53,7 @@
     }
     return null;
   }
-  
+
   function main() {
     let el = findSoonest();
     if (el) {
@@ -63,5 +63,5 @@
     }
   }
 
-  main();  
+  main();
 })();

@@ -3,16 +3,16 @@
  * @Description: Shows a box with the titles of bills returned from a search on congress.gov
  * @Image: https://imgur.com/a/YrMc4Fk
  */
-(function() {
+(function () {
 
   function findEls() {
     let els = [];
-    Array.from(document.getElementsByTagName('span')).forEach((el,i) => {
+    Array.from(document.getElementsByTagName('span')).forEach((el, i) => {
       if (el.className == 'result-title') {
         els.push(el);
       }
     });
-    els.sort((a,b) => {
+    els.sort((a, b) => {
       let fst = a.innerText.toLowerCase();
       let snd = b.innerText.toLowerCase();
       if (fst < snd) {
@@ -54,18 +54,18 @@
     closeBtn.href = '#';
     Object.assign(closeBtn.style, {
       'margin-bottom': '20px',
-    });    
-    closeBtn.addEventListener('click', function() {
+    });
+    closeBtn.addEventListener('click', function () {
       box.parentNode.removeChild(box);
     });
     let list = document.createElement('ol');
     box.appendChild(list);
-    for (let i=0; i<els.length; i++) {
+    for (let i = 0; i < els.length; i++) {
       let el = els[i];
       let link = document.createElement('a');
       link.innerText = el.innerText;
       link.href = '#';
-      link.addEventListener('click', function(el) {
+      link.addEventListener('click', function (el) {
         window.scrollTo(document.body, el.offsetTop, 250);
       }.bind(null, el));
       let listItem = document.createElement('li');
@@ -73,11 +73,11 @@
       list.appendChild(listItem);
     }
   }
-  
+
   function main() {
     let els = findEls();
     createBox(els);
   }
 
-  main();  
+  main();
 })();

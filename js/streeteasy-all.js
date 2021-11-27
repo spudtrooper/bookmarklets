@@ -2,7 +2,7 @@
  * @Title: Street Easy All
  * @Description: Shows a page of all streeteasy.com listings instead of paging.
  */
-(function() {
+(function () {
 
   function findMax() {
     let ul = document.getElementsByClassName('pagination-list-container')[0];
@@ -31,14 +31,14 @@
     let url = maxObj.baseUrl + '?page=' + page;
     console.log('url', url);
     var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
+    xhttp.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
         let text = xhttp.responseText;
-        var el = document.createElement( 'html' );
+        var el = document.createElement('html');
         el.innerHTML = text;
         let cards = el.getElementsByClassName(
           'listingCard listingCard--rentalCard jsItem');
-        for (let j=0; j<cards.length; j++) {
+        for (let j = 0; j < cards.length; j++) {
           let li = document.createElement('SPAN');
           li.style.float = 'left';
           li.appendChild(cards[j]);
@@ -47,7 +47,7 @@
       }
     };
     xhttp.open('GET', url, true);
-    xhttp.send();      
+    xhttp.send();
   }
 
   function makeRequests(maxObj) {
@@ -59,8 +59,8 @@
       console.log('Creating listings for ' + i);
       makeRequest(div, maxObj, i);
       if (i <= max) {
-        setTimeout(function() {
-          loop(i+1);
+        setTimeout(function () {
+          loop(i + 1);
         }, 3000);
       } else {
         console.log('done');
@@ -68,11 +68,11 @@
     };
     loop(1);
   }
-  
+
   function main() {
     let max = findMax();
     makeRequests(max);
   }
 
-  main();  
+  main();
 })();

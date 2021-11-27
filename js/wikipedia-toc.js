@@ -3,7 +3,7 @@
  * @Description: Makes wikipedia menus hover and track with the page, e.g. https://imgur.com/a/N6kMzrg.
  *
  */
-(function() {
+(function () {
   let toc = $('#toc');
   toc.css('position', 'fixed');
   toc.css('right', '10px');
