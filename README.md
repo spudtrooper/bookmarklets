@@ -13,5 +13,5 @@ This generates [bookmarklets.html](https://spudtrooper.github.io/bookmarklets/) 
 To install (This only will work for Jeff):
 
 ```
-./scripts/install.sh
+./scripts/publish.sh
 ```
