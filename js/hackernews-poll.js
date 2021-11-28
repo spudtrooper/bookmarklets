@@ -21,25 +21,25 @@
     function createScoreDiv(span, score, min, max) {
         var chars = normalize(MAX_CHARS, score, min, max);
         var cval = normalize(0xff, score, min, max, 0xee);
-        var color = "#" + cval.toString(16) + "0000";
+        var color = '#' + cval.toString(16) + '0000';
         var td = span.parentNode;
-        td.appendChild(document.createTextNode(" "));
-        var el = document.createElement("span");
+        td.appendChild(document.createTextNode(' '));
+        var el = document.createElement('span');
         td.appendChild(el);
         var elStyle = {
-            "height": "100%",
-            "background-color": color,
-            "color": color
+            'height': '100%',
+            'background-color': color,
+            'color': color
         };
-        var str = "";
-        for (var i = 0; i < chars; i++) str += "|";
+        var str = '';
+        for (var i = 0; i < chars; i++) str += '|';
         el.innerHTML = str;
         setStyle(el, elStyle);
         console.log(el);
     }
 
     function main() {
-        var spans = document.getElementsByTagName("span");
+        var spans = document.getElementsByTagName('span');
         var pairs = [];
         function makePair(span, score) {
             return { span: span, score: score };
