@@ -3,7 +3,7 @@
 # Generates the index and copies to my githubio directory. To commit, pass
 # anything as arguments, e.g.
 #
-#   $ ./scripts/install.sh asdf
+#   $ ./scripts/publish.sh asdf
 #
 set -e
 
