@@ -21,6 +21,14 @@ return null;}
 function main(){let el=findSoonest();if(el){el.scrollIntoView();}else{alert('Could not find a meeting now');}}
 main();})();) ([src](https://github.com/spudtrooper/bookmarklets/blob/main/js/recent-remote-meetings.js)) - Scrolls to the soonest or most recent meetings in https://www.nyintergroup.org/remote-meetings/list/.
 
+*	[Hackernews Poll](javascript:(function(){const MAX_CHARS=75;function setStyle(el,style){for(var i in style){el.style[i]=style[i];}}
+function normalize(n,v,min,max,d){d=d||n/2;return Math.floor(n-d*(max-v)/(max-min));}
+function createScoreDiv(span,score,min,max){var chars=normalize(MAX_CHARS,score,min,max);var cval=normalize(0xff,score,min,max,0xee);var color="#"+cval.toString(16)+"0000";var td=span.parentNode;td.appendChild(document.createTextNode(" "));var el=document.createElement("span");td.appendChild(el);var elStyle={"height":"100%","background-color":color,"color":color};var str="";for(var i=0;i<chars;i++)str+="|";el.innerHTML=str;setStyle(el,elStyle);console.log(el);}
+function main(){var spans=document.getElementsByTagName("span");var pairs=[];function makePair(span,score){return{span:span,score:score};}
+var min;var max;for(var i in spans){var span=spans[i];if(!span.id||!span.id.match(/score_/))continue;var score=parseInt(span.innerHTML.match(/(\d+) /)[0]);if(!min||score<min)min=score;if(!max||score>max)max=score;pairs.push(makePair(span,score));}
+for(var i in pairs){if(i==0)continue;var p=pairs[i];createScoreDiv(p.span,p.score,min,max)}}
+main();})();) ([src](https://github.com/spudtrooper/bookmarklets/blob/main/js/hackernews-poll.js)) - Adds colored histograms to polls on news.ycombinator.org
+
 *	[Instagram Sizes](javascript:(function(){let srcset=document.querySelector('img[sizes="600px"]').getAttribute('srcset');srcset.split(',').map(function(e){let p=e.split(' ');return p[1]+' '+p[0];}).forEach(function(e){console.log(e);});})();) ([src](https://github.com/spudtrooper/bookmarklets/blob/main/js/instagram-sizes.js)) - Shows the various sized images for an instagram image. To use: (1) Click on a thumbnail (2) Run this (3) See the output in the dev console.
 
 *	[Street Easy All](javascript:(function(){function findMax(){let ul=document.getElementsByClassName('pagination-list-container')[0];let li=ul.getElementsByClassName('page gap')[0].nextSibling.nextSibling;let a=li.firstChild.nextSibling;let max=parseInt(a.innerText);let baseUrl=a.href.replace('?page='+max,'');return{max:max,baseUrl:baseUrl,};}
