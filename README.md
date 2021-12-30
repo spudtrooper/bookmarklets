@@ -1,5 +1,7 @@
 # Bookmarklets
 
+Source for https://spudtrooper.github.io/bookmarklets/
+
 ## Usage
 
 To generate index:
@@ -14,4 +16,10 @@ To install (This only will work for Jeff):
 
 ```
 ./scripts/publish.sh
+```
+
+Add anything as parameter to actually commit the change and publish to https://spudtrooper.github.io/bookmarklets/, e.g.
+
+```
+./scripts/publish.sh asdf
 ```
