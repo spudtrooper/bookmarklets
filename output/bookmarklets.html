@@ -52,7 +52,7 @@ main();})();">Hackernews Poll</a> (<a target="_" href="https://github.com/spudtr
 					</li>
 			
 					<li>
-						<a href="javascript:(function(){Array.from(document.querySelectorAll('button')).filter((el)=>el.innerText=='Follow').forEach((el)=>el.click());})();">Rarible Follow All</a> (<a target="_" href="https://github.com/spudtrooper/bookmarklets/blob/main/js/rarible-follow-all.js">src</a>) - Follow all on rarible.com
+						<a href="javascript:(function(){let times=prompt('# iterations','1');let count=0;let loop=()=>{Array.from(document.querySelectorAll('button')).filter((el)=>el.innerText=='Follow').forEach((el)=>el.click());let el=document.getElementsByClassName('ReactVirtualized__Grid ReactVirtualized__List')[0];el.scrollTop=el.scrollHeight;count++;if(count<5){setTimeout(loop,1000);}};loop();})();">Rarible Follow All</a> (<a target="_" href="https://github.com/spudtrooper/bookmarklets/blob/main/js/rarible-follow-all.js">src</a>) - Follow all on rarible.com
 						
 					</li>
 			
