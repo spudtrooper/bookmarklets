@@ -52,6 +52,11 @@ main();})();">Hackernews Poll</a> (<a target="_" href="https://github.com/spudtr
 					</li>
 			
 					<li>
+						<a href="javascript:(function(){Array.from(document.querySelectorAll('button')).filter((el)=>el.innerText=='Follow').forEach((el)=>el.click());})();">Rarible Follow All</a> (<a target="_" href="https://github.com/spudtrooper/bookmarklets/blob/main/js/rarible-follow-all.js">src</a>) - Follow all on rarible.com
+						
+					</li>
+			
+					<li>
 						<a href="javascript:(function(){function findMax(){let ul=document.getElementsByClassName('pagination-list-container')[0];let li=ul.getElementsByClassName('page gap')[0].nextSibling.nextSibling;let a=li.firstChild.nextSibling;let max=parseInt(a.innerText);let baseUrl=a.href.replace('?page='+max,'');return{max:max,baseUrl:baseUrl,};}
 function getOrCreate(tag,id,opt_parent){let el=document.getElementById(id);if(!el){el=document.createElement(tag);if(opt_parent){opt_parent.appendChild(el);}}
 return el;}

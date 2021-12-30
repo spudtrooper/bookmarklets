@@ -31,6 +31,8 @@ main();})();) ([src](https://github.com/spudtrooper/bookmarklets/blob/main/js/ha
 
 *	[Instagram Sizes](javascript:(function(){let srcset=document.querySelector('img[sizes="600px"]').getAttribute('srcset');srcset.split(',').map(function(e){let p=e.split(' ');return p[1]+' '+p[0];}).forEach(function(e){console.log(e);});})();) ([src](https://github.com/spudtrooper/bookmarklets/blob/main/js/instagram-sizes.js)) - Shows the various sized images for an instagram image. To use: (1) Click on a thumbnail (2) Run this (3) See the output in the dev console.
 
+*	[Rarible Follow All](javascript:(function(){Array.from(document.querySelectorAll('button')).filter((el)=>el.innerText=='Follow').forEach((el)=>el.click());})();) ([src](https://github.com/spudtrooper/bookmarklets/blob/main/js/rarible-follow-all.js)) - Follow all on rarible.com
+
 *	[Street Easy All](javascript:(function(){function findMax(){let ul=document.getElementsByClassName('pagination-list-container')[0];let li=ul.getElementsByClassName('page gap')[0].nextSibling.nextSibling;let a=li.firstChild.nextSibling;let max=parseInt(a.innerText);let baseUrl=a.href.replace('?page='+max,'');return{max:max,baseUrl:baseUrl,};}
 function getOrCreate(tag,id,opt_parent){let el=document.getElementById(id);if(!el){el=document.createElement(tag);if(opt_parent){opt_parent.appendChild(el);}}
 return el;}
