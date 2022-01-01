@@ -52,6 +52,11 @@ main();})();">Hackernews Poll</a> (<a target="_" href="https://github.com/spudtr
 					</li>
 			
 					<li>
+						<a href="javascript:(function(){let clickSign=()=>{let div=document.getElementsByClassName('request-signature__rows')[0];if(!div)return;if(!div.innerText.includes('I would like to follow user'))return;Array.from(document.getElementsByClassName('button')).filter((el)=>el.getAttribute('data-testid')&&el.getAttribute('data-testid')=='request-signature__sign').forEach((el)=>el.click());};setInterval(clickSign,300);})();">Metamask Sign Auto</a> (<a target="_" href="https://github.com/spudtrooper/bookmarklets/blob/main/js/metamask-sign-auto.js">src</a>) - Automatically signs trivial metamask signature requests
+						
+					</li>
+			
+					<li>
 						<a href="javascript:(function(){let times=parseInt(prompt('# iterations','1'));let count=0;let loop=()=>{Array.from(document.querySelectorAll('button')).filter((el)=>el.innerText=='Follow').forEach((el)=>el.click());let el=document.getElementsByClassName('ReactVirtualized__Grid ReactVirtualized__List')[0];el.scrollTop=el.scrollHeight;if(++count<times){setTimeout(loop,3000);}};loop();})();">Rarible Follow All</a> (<a target="_" href="https://github.com/spudtrooper/bookmarklets/blob/main/js/rarible-follow-all.js">src</a>) - Follow all on rarible.com
 						
 					</li>
