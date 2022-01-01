@@ -4,7 +4,7 @@
  * @Description: Follow all on rarible.com
  */
 (function () {
-    let times = parseInt(prompt('# iterations', '1'));
+    let times = 100;
     let count = 0;
     let loop = () => {
         Array.from(document.querySelectorAll('button')).filter((el) => el.innerText == 'Follow').forEach((el) => el.click());
