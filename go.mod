@@ -2,6 +2,8 @@ module github.com/spudtrooper/bookmarklets
 
 go 1.17
 
+replace github.com/spudtrooper/bookmarkletgen => ../bookmarkletgen
+
 require (
 	github.com/pkg/errors v0.9.1
 	github.com/spudtrooper/bookmarkletgen v0.1.5
