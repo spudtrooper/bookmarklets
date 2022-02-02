@@ -69,11 +69,19 @@
         loop(100);
     }
 
+    function createElement(tag, parent, style) {
+        let newNode = document.createElement(tag);
+        parent.appendChild(newNode);
+        if (style) {
+            Object.assign(newNode.style, style);
+        }
+        return newNode;
+    }
+
     try {
         clickSeenByButton();
         scroll((titlesToInfo) => {
-            let div = document.createElement('div');
-            Object.assign(div.style, {
+            let div = createElement('div', document.body, {
                 position: 'absolute',
                 top: '10px',
                 left: '10px',
@@ -84,19 +92,9 @@
                 'background-color': '#fff',
                 'max-height': (window.outerHeight - 100) + 'px',
             });
-            document.body.appendChild(div);
-            let ul = document.createElement('ul');
-            div.appendChild(ul);
+            let ul = createElement('ul', div);
             let titles = Object.keys(titlesToInfo);
             titles.sort();
-            let createElement = (tag, parent, style) => {
-                let newNode = document.createElement(tag);
-                parent.appendChild(newNode);
-                if (style) {
-                    Object.assign(newNode.style, style);
-                }
-                return newNode;
-            };
             titles.forEach(t => {
                 let info = titlesToInfo[t],
                     src = info.img,
