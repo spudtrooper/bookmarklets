@@ -9,7 +9,7 @@ args=(
     --base_source_url
     https://github.com/spudtrooper/bookmarklets/blob/main/js
     --js_dir
-    js
+    src
     --outfile_html
     output/bookmarklets.html
     --outfile_md
