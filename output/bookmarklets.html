@@ -87,8 +87,9 @@ function scroll(fn){let el=findScrollDiv();if(!el){alert('cannot find scroll div
 let titlesToInfo={};let loop=(nextScrollHeight)=>{Array.from(document.getElementsByTagName('a')).filter(el=>{return el.href=='https://www.instagram.com/'+el.title+'/';}).map(el=>{let t=el.title;let img=findImage(t);let p=el.parentNode.parentNode.parentNode;let nameParts=p.innerText.split('\n'),name=nameParts[nameParts.length-1];let verified=p.getElementsByClassName('coreSpriteVerifiedBadgeSmall')[0],verifiedClass=verified?verified.className:'';let info={img:img,name:name,verifiedClass:verifiedClass,}
 titlesToInfo[t]=info;});console.log('titles',Object.keys(titlesToInfo).length);if(nextScrollHeight>el.scrollHeight){fn.call(null,titlesToInfo);return;}
 el.scrollTo(0,nextScrollHeight);setTimeout(loop.bind(null,nextScrollHeight+100),200);};loop(100);}
-try{clickSeenByButton();scroll((titlesToInfo)=>{let div=document.createElement('div');Object.assign(div.style,{position:'absolute',top:'10px',left:'10px',padding:'10px',border:'1px solid black',overflow:'auto','z-index':1000000,'background-color':'#fff','max-height':(window.outerHeight-100)+'px',});document.body.appendChild(div);let ul=document.createElement('ul');div.appendChild(ul);let titles=Object.keys(titlesToInfo);titles.sort();let createElement=(tag,parent,style)=>{let newNode=document.createElement(tag);parent.appendChild(newNode);if(style){Object.assign(newNode.style,style);}
-return newNode;};titles.forEach(t=>{let info=titlesToInfo[t],src=info.img,name=info.name,verifiedClass=info.verifiedClass;let li=createElement('li',ul);let liContent=createElement('span',li,{'display':'block',});let img=createElement('img',liContent,{'width':'22px','height':'22px','border-radius':'50%','vertical-align':'middle',})
+function createElement(tag,parent,style){let newNode=document.createElement(tag);parent.appendChild(newNode);if(style){Object.assign(newNode.style,style);}
+return newNode;}
+try{clickSeenByButton();scroll((titlesToInfo)=>{let div=createElement('div',document.body,{position:'absolute',top:'10px',left:'10px',padding:'10px',border:'1px solid black',overflow:'auto','z-index':1000000,'background-color':'#fff','max-height':(window.outerHeight-100)+'px',});let ul=createElement('ul',div);let titles=Object.keys(titlesToInfo);titles.sort();titles.forEach(t=>{let info=titlesToInfo[t],src=info.img,name=info.name,verifiedClass=info.verifiedClass;let li=createElement('li',ul);let liContent=createElement('span',li,{'display':'block',});let img=createElement('img',liContent,{'width':'22px','height':'22px','border-radius':'50%','vertical-align':'middle',})
 img.src=src;let a=createElement('a',liContent,{'vertical-align':'middle','color':'#262626','font-weight':'600','margin-left':'5px',});a.href='http://instagram.com/'+t+'/';a.innerHTML='<b>'+t+'</b>'+' - '+'<span style=\'color:#8e8e8e; font-weight:400;\'>'+name+'</span>';if(verifiedClass){liContent.innerHTML+='&nbsp;';let verifiedSpan=createElement('span',liContent,{'display':'inline','color':'#fff',});verifiedSpan.className=verifiedClass;verifiedSpan.innerText='__';}});});}catch(e){console.log('error',e);}})();">
             Instagram Story Visitors Expand
           </a>
@@ -97,6 +98,22 @@ img.src=src;let a=createElement('a',liContent,{'vertical-align':'middle','color'
             src
           </a>
           ) - Expands the list of IG story visitors into a new div the height of the window.
+        </li>
+        <li>
+          <a href="javascript:(function(){function clickFollowingButton(){Array.from(document.getElementsByTagName('a')).forEach((el)=>{if(el.href&&el.href.match(/\/following\//)){console.log('click');el.click();}});}
+function findFollowingButtons(){return Array.from(document.querySelectorAll('button')).filter(el=>el.textContent=='Following');}
+function findUnfollowButton(){return Array.from(document.querySelectorAll('button')).find(el=>el.textContent=='Unfollow');}
+function main(){clickFollowingButton();let loop=()=>{let followingButtons=findFollowingButtons();if(!followingButtons||!followingButtons.length||followingButtons.length<5){console.log('waiting for following buttons');setTimeout(loop,1000);return;}
+let unfollowNext=(done)=>{let btn=findUnfollowButton();if(!btn){setTimeout(unfollowNext.bind(null,done),200);return;}
+btn.click();done.call(null);};let burnDownFollowingButtons=()=>{if(followingButtons.length){let nextBtn=followingButtons.pop(0);nextBtn.click();unfollowNext(burnDownFollowingButtons);}};burnDownFollowingButtons();};loop();}
+main();})();">
+            Instagram Unfollow All
+          </a>
+          (
+          <a target="_" href="https://github.com/spudtrooper/bookmarklets/blob/main/src/instagram-unfollow-all.js">
+            src
+          </a>
+          ) - Unfollows people in bulk, 25 at a time.
         </li>
         <li>
           <a href="javascript:(function(){let clicks=0;const sleep=150;const longSleep=3000;let clickSign=()=>{let div=document.getElementsByClassName('request-signature__rows')[0];if(!div)return;if(!div.innerText.includes('I would like to follow user'))return;Array.from(document.getElementsByClassName('button')).filter((el)=>el.getAttribute('data-testid')&&el.getAttribute('data-testid')=='request-signature__sign').forEach((el)=>el.click());console.log('clicks:'+(++clicks));if(clicks%50==0){console.log('sleeping...');setTimeout(clickSign,longSleep);}else{setTimeout(clickSign,sleep);}};setTimeout(clickSign,5000);})();">
