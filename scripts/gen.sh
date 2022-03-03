@@ -14,7 +14,7 @@ args=(
     output/bookmarklets.html
     --outfile_md
     output/bookmarklets.md
-    --footer_html
-    "[<a href=\"https://github.com/spudtrooper/bookmarklets\">Source</a>]"
+    --template_html_file
+    templates/index.html
 )
 bookmarkletgen "${args[@]}"
