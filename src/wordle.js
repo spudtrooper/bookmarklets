@@ -48,6 +48,22 @@
     let guesses = [];
     let nonCorrectLetters = (w, i, ps) => w.split('').filter((c, j) => i != j && ps.indexOf(c) != -1 && c != correct[j]);
     let keep = (w) => {
+      let allPresent = {};
+      present.forEach(ps => {
+        ps.forEach(s => {
+          allPresent[s] = false;
+        })
+      })
+      for (let i = 0; i < w.length; i++) {
+        let l = w[i];
+        allPresent[l] = true;
+
+      }
+      for (let s in allPresent) {
+        if (!allPresent[s]) {
+          return false;
+        }
+      }
       for (let i = 0; i < correct.length; i++) {
         let c = correct[i];
         let l = w[i];

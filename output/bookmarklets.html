@@ -262,7 +262,10 @@ let words=()=>boardState()[i];for(let j=0;j<evaluations().length;j++){if(states(
 let present=[[],[],[],[],[],];let incorrect=(s)=>correct.filter(c=>s==c).length>0;for(let i=0;i<boardState().length;i++){let states=()=>evaluations()[i];if(!states()||states().length!=5){break;}
 let words=()=>boardState()[i];for(let j=0;j<evaluations().length;j++){if(incorrect(words()[j])){continue;}
 if(states()[j]=='present'){present[j].push(words()[j]);}}}
-console.log('correct',correct);console.log('present',present);let guesses=[];let nonCorrectLetters=(w,i,ps)=>w.split('').filter((c,j)=>i!=j&&ps.indexOf(c)!=-1&&c!=correct[j]);let keep=(w)=>{for(let i=0;i<correct.length;i++){let c=correct[i];let l=w[i];if(c&&c!=l){return false;}}
+console.log('correct',correct);console.log('present',present);let guesses=[];let nonCorrectLetters=(w,i,ps)=>w.split('').filter((c,j)=>i!=j&&ps.indexOf(c)!=-1&&c!=correct[j]);let keep=(w)=>{let allPresent={};present.forEach(ps=>{ps.forEach(s=>{allPresent[s]=false;})})
+for(let i=0;i<w.length;i++){let l=w[i];allPresent[l]=true;}
+for(let s in allPresent){if(!allPresent[s]){return false;}}
+for(let i=0;i<correct.length;i++){let c=correct[i];let l=w[i];if(c&&c!=l){return false;}}
 if(!present.filter(arr=>arr.length).length){return true;}
 let isMaybePresent=false;for(let i=0;i<present.length;i++){if(correct[i]){continue;}
 let l=w[i];let letters=nonCorrectLetters(w,i,present[i]);for(let j=0;j<letters.length;j++){if(letters[j]==l){isMaybePresent=true;break;}}}
