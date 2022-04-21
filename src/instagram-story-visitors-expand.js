@@ -54,9 +54,8 @@
           img: img,
           name: name,
           verifiedClass: verifiedClass,
-        }
+        };
         titlesToInfo[t] = info;
-
       });
       console.log('titles', Object.keys(titlesToInfo).length);
       if (nextScrollHeight > el.scrollHeight) {
@@ -121,7 +120,7 @@
           'height': '22px',
           'border-radius': '50%',
           'vertical-align': 'middle',
-        })
+        });
         img.src = src;
         let a = createElement('a', liContent, {
           'vertical-align': 'middle',
