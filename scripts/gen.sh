@@ -16,5 +16,7 @@ args=(
     output/bookmarklets.md
     --template_html_file
     templates/index.html
+    --footer_html
+    "Last updated: <b><em>$(date)</em></b>"
 )
 bookmarkletgen "${args[@]}"
