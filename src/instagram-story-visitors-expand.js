@@ -33,11 +33,7 @@
     return res;
   }
 
-  function scroll(fn) {
-    let el = findScrollDiv();
-    if (!el) {
-      alert('cannot find scroll div');
-    }
+  function doScroll(el, fn) {
     let titlesToInfo = {};
     let loop = (nextScrollHeight) => {
       Array.from(document.getElementsByTagName('a')).filter(el => {
@@ -66,6 +62,23 @@
       setTimeout(loop.bind(null, nextScrollHeight + 100), 200);
     };
     loop(100);
+    return true;
+  }
+
+  function scroll(fn) {
+    let loop = (count) => {
+      if (!count) {
+        alert('cannot find scroll div');
+        return;
+      }
+      let el = findScrollDiv();
+      if (el) {
+        doScroll(el, fn);
+        return;
+      }
+      setTimeout(loop.bind(null, count - 1), 200);
+    };
+    loop(3);
   }
 
   function createElement(tag, parent, style) {
@@ -92,12 +105,13 @@
 
   function startScrolling() {
     scroll((titlesToInfo) => {
+      let regularTitleInfos = {}, verifiedTitleInfos = {};
       for (const title in titlesToInfo) {
         const info = titlesToInfo[title];
         if (info.verifiedClass) {
           verifiedTitleInfos[title] = info;
         } else {
-          regulerTitleInfos[title] = info;
+          regularTitleInfos[title] = info;
         }
       }
 
@@ -113,7 +127,6 @@
         'max-height': (window.outerHeight - 100) + 'px',
       });
       let ul = createElement('ul', div);
-      let regulerTitleInfos = {}, verifiedTitleInfos = {};
 
       let processTitles = (titles) => {
         titles.sort();
@@ -153,9 +166,9 @@
         });
       };
 
-      const regularTitles = Object.keys(regulerTitleInfos);
-      processTitles(verifiedTitles);
       const verifiedTitles = Object.keys(verifiedTitleInfos);
+      processTitles(verifiedTitles);
+      const regularTitles = Object.keys(regularTitleInfos);
       processTitles(regularTitles);
     });
   }
