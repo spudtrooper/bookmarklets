@@ -144,7 +144,8 @@ function createElement(tag,parent,style){let newNode=document.createElement(tag)
 return newNode;}
 function waitForViewers(callback){console.log('waitForViewers');const divs=document.getElementsByTagName('div');for(let i=0;i<divs.length;i++){const div=divs[i];if(div.style&&div.style.maxHeight=='400px'){callback.call(null);return;}}
 setTimeout(waitForViewers.bind(null,callback),200);}
-function startScrolling(){scroll((titlesToInfo)=>{let div=createElement('div',document.body,{position:'absolute',top:'10px',left:'10px',padding:'10px',border:'1px solid black',overflow:'auto','z-index':1000000,'background-color':'#fff','max-height':(window.outerHeight-100)+'px',});let ul=createElement('ul',div);let titles=Object.keys(titlesToInfo);titles.sort();titles.forEach(t=>{let info=titlesToInfo[t],src=info.img,name=info.name,verifiedClass=info.verifiedClass;let li=createElement('li',ul);let liContent=createElement('span',li,{'display':'block',});let img=createElement('img',liContent,{'width':'22px','height':'22px','border-radius':'50%','vertical-align':'middle',});img.src=src;let a=createElement('a',liContent,{'vertical-align':'middle','color':'#262626','font-weight':'600','margin-left':'5px',});a.href='http://instagram.com/'+t+'/';a.innerHTML='<b>'+t+'</b>'+' - '+'<span style=\'color:#8e8e8e; font-weight:400;\'>'+name+'</span>';if(verifiedClass){liContent.innerHTML+='&nbsp;';let verifiedSpan=createElement('span',liContent,{'display':'inline','color':'#fff',});verifiedSpan.className=verifiedClass;verifiedSpan.innerText='__';}});});}
+function startScrolling(){scroll((titlesToInfo)=>{for(const title in titlesToInfo){const info=titlesToInfo[title];if(info.verifiedClass){verifiedTitleInfos[title]=info;}else{regulerTitleInfos[title]=info;}}
+let div=createElement('div',document.body,{position:'absolute',top:'10px',left:'10px',padding:'10px',border:'1px solid black',overflow:'auto','z-index':1000000,'background-color':'#fff','max-height':(window.outerHeight-100)+'px',});let ul=createElement('ul',div);let regulerTitleInfos={},verifiedTitleInfos={};let processTitles=(titles)=>{titles.sort();titles.forEach(t=>{let info=titlesToInfo[t],src=info.img,name=info.name,verifiedClass=info.verifiedClass;let li=createElement('li',ul);let liContent=createElement('span',li,{'display':'block',});let img=createElement('img',liContent,{'width':'22px','height':'22px','border-radius':'50%','vertical-align':'middle',});img.src=src;let a=createElement('a',liContent,{'vertical-align':'middle','color':'#262626','font-weight':'600','margin-left':'5px',});a.href='http://instagram.com/'+t+'/';a.innerHTML='<b>'+t+'</b>'+' - '+'<span style=\'color:#8e8e8e; font-weight:400;\'>'+name+'</span>';if(verifiedClass){liContent.innerHTML+='&nbsp;';let verifiedSpan=createElement('span',liContent,{'display':'inline','color':'#fff',});verifiedSpan.className=verifiedClass;verifiedSpan.innerText='__';}});};const regularTitles=Object.keys(regulerTitleInfos);processTitles(verifiedTitles);const verifiedTitles=Object.keys(verifiedTitleInfos);processTitles(regularTitles);});}
 function main(){clickSeenByButton();waitForViewers(startScrolling);}
 main();})();">
             Instagram Story Visitors Expand
@@ -277,7 +278,7 @@ window.scrollTo(0,document.body.scrollHeight);console.log('Liked '+count+' tweet
         Last updated:
         <b>
           <em>
-            Wed Apr 20 21:16:46 EDT 2022
+            Tue May 24 05:26:47 EDT 2022
           </em>
         </b>
       </p>

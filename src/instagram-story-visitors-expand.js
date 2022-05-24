@@ -92,6 +92,15 @@
 
   function startScrolling() {
     scroll((titlesToInfo) => {
+      for (const title in titlesToInfo) {
+        const info = titlesToInfo[title];
+        if (info.verifiedClass) {
+          verifiedTitleInfos[title] = info;
+        } else {
+          regulerTitleInfos[title] = info;
+        }
+      }
+
       let div = createElement('div', document.body, {
         position: 'absolute',
         top: '10px',
@@ -104,42 +113,50 @@
         'max-height': (window.outerHeight - 100) + 'px',
       });
       let ul = createElement('ul', div);
-      let titles = Object.keys(titlesToInfo);
-      titles.sort();
-      titles.forEach(t => {
-        let info = titlesToInfo[t],
-          src = info.img,
-          name = info.name,
-          verifiedClass = info.verifiedClass;
-        let li = createElement('li', ul);
-        let liContent = createElement('span', li, {
-          'display': 'block',
-        });
-        let img = createElement('img', liContent, {
-          'width': '22px',
-          'height': '22px',
-          'border-radius': '50%',
-          'vertical-align': 'middle',
-        });
-        img.src = src;
-        let a = createElement('a', liContent, {
-          'vertical-align': 'middle',
-          'color': '#262626',
-          'font-weight': '600',
-          'margin-left': '5px',
-        });
-        a.href = 'http://instagram.com/' + t + '/';
-        a.innerHTML = '<b>' + t + '</b>' + ' - ' + '<span style=\'color:#8e8e8e; font-weight:400;\'>' + name + '</span>';
-        if (verifiedClass) {
-          liContent.innerHTML += '&nbsp;';
-          let verifiedSpan = createElement('span', liContent, {
-            'display': 'inline',
-            'color': '#fff',
+      let regulerTitleInfos = {}, verifiedTitleInfos = {};
+
+      let processTitles = (titles) => {
+        titles.sort();
+        titles.forEach(t => {
+          let info = titlesToInfo[t],
+            src = info.img,
+            name = info.name,
+            verifiedClass = info.verifiedClass;
+          let li = createElement('li', ul);
+          let liContent = createElement('span', li, {
+            'display': 'block',
           });
-          verifiedSpan.className = verifiedClass;
-          verifiedSpan.innerText = '__';
-        }
-      });
+          let img = createElement('img', liContent, {
+            'width': '22px',
+            'height': '22px',
+            'border-radius': '50%',
+            'vertical-align': 'middle',
+          });
+          img.src = src;
+          let a = createElement('a', liContent, {
+            'vertical-align': 'middle',
+            'color': '#262626',
+            'font-weight': '600',
+            'margin-left': '5px',
+          });
+          a.href = 'http://instagram.com/' + t + '/';
+          a.innerHTML = '<b>' + t + '</b>' + ' - ' + '<span style=\'color:#8e8e8e; font-weight:400;\'>' + name + '</span>';
+          if (verifiedClass) {
+            liContent.innerHTML += '&nbsp;';
+            let verifiedSpan = createElement('span', liContent, {
+              'display': 'inline',
+              'color': '#fff',
+            });
+            verifiedSpan.className = verifiedClass;
+            verifiedSpan.innerText = '__';
+          }
+        });
+      };
+
+      const regularTitles = Object.keys(regulerTitleInfos);
+      processTitles(verifiedTitles);
+      const verifiedTitles = Object.keys(verifiedTitleInfos);
+      processTitles(regularTitles);
     });
   }
 
