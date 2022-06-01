@@ -137,7 +137,8 @@ main();})();">
           <a href="javascript:(function(){function clickSeenByButton(){Array.from(document.getElementsByTagName('button')).forEach((el)=>{if(el.innerText&&el.innerText.match(/^Seen by \d+$/)){console.log('click');el.click();}});}
 function findScrollDiv(){let res;Array.from(document.getElementsByTagName('div')).forEach((el)=>{if(el.style&&el.style.overflow=='hidden auto'){res=el;return;}});return res;}
 function findImage(t){let res;Array.from(document.getElementsByTagName('img')).forEach((el)=>{if(el.alt&&el.alt.startsWith(t)&&el.alt.endsWith('profile picture')){res=el.src;return;}});return res;}
-function doScroll(el,fn){let titlesToInfo={};let loop=(nextScrollHeight)=>{Array.from(document.getElementsByTagName('a')).filter(el=>{return el.href=='https://www.instagram.com/'+el.title+'/';}).map(el=>{let t=el.title;let img=findImage(t);let p=el.parentNode.parentNode.parentNode;let nameParts=p.innerText.split('\n'),name=nameParts[nameParts.length-1];let verified=p.getElementsByClassName('coreSpriteVerifiedBadgeSmall')[0],verifiedClass=verified?verified.className:'';let info={img:img,name:name,verifiedClass:verifiedClass,};titlesToInfo[t]=info;});console.log('titles',Object.keys(titlesToInfo).length);if(nextScrollHeight>el.scrollHeight){fn.call(null,titlesToInfo);return;}
+function doScroll(el,fn){let titlesToInfo={};let loop=(nextScrollHeight)=>{Array.from(document.getElementsByTagName('a')).filter(el=>{return el.getAttribute('role')=='link'&&el.href&&el.href.match(/https:\/\/(www\.)?instagram\.com\/[a-z0-9]+\/?/);}).map(el=>{let t=el.title;if(!t){t=el.href.replace(/.*\.instagram.com\/?/,'').replace(/\//g,'');}
+let img=findImage(t);let p=el.parentNode.parentNode.parentNode;let nameParts=p.innerText.split('\n'),name=nameParts[nameParts.length-1];let verified=p.innerText.includes('Verified'),verifiedClass=verified?'_act0 _a9_u _9ys8':'';let info={img:img,name:name,verifiedClass:verifiedClass,};titlesToInfo[t]=info;});console.log('titles',Object.keys(titlesToInfo).length);if(nextScrollHeight>el.scrollHeight){fn.call(null,titlesToInfo);return;}
 el.scrollTo(0,nextScrollHeight);setTimeout(loop.bind(null,nextScrollHeight+100),200);};loop(100);return true;}
 function scroll(fn){let loop=(count)=>{if(!count){alert('cannot find scroll div');return;}
 let el=findScrollDiv();if(el){doScroll(el,fn);return;}
@@ -280,7 +281,7 @@ window.scrollTo(0,document.body.scrollHeight);console.log('Liked '+count+' tweet
         Last updated:
         <b>
           <em>
-            Tue May 24 05:36:08 EDT 2022
+            Wed Jun  1 07:09:47 EDT 2022
           </em>
         </b>
       </p>

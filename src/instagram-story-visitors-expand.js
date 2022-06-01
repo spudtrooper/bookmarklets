@@ -37,15 +37,18 @@
     let titlesToInfo = {};
     let loop = (nextScrollHeight) => {
       Array.from(document.getElementsByTagName('a')).filter(el => {
-        return el.href == 'https://www.instagram.com/' + el.title + '/';
+        return el.getAttribute('role') == 'link' && el.href && el.href.match(/https:\/\/(www\.)?instagram\.com\/[a-z0-9]+\/?/);
       }).map(el => {
         let t = el.title;
+        if (!t) {
+          t = el.href.replace(/.*\.instagram.com\/?/, '').replace(/\//g, '');
+        }
         let img = findImage(t);
         let p = el.parentNode.parentNode.parentNode;
         let nameParts = p.innerText.split('\n'),
           name = nameParts[nameParts.length - 1];
-        let verified = p.getElementsByClassName('coreSpriteVerifiedBadgeSmall')[0],
-          verifiedClass = verified ? verified.className : '';
+        let verified = p.innerText.includes('Verified'),        
+          verifiedClass = verified ? '_act0 _a9_u _9ys8' : ''; /* TODO: This is going to break */
         let info = {
           img: img,
           name: name,
