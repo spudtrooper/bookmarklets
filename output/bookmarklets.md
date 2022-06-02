@@ -19,7 +19,7 @@ let target=day+' '+hours+':'+mins+' '+amPm;let paddedTarget=day+' '+pad(hours)+'
 function findSoonest(){let allEls=Array.from(document.getElementsByTagName('div')).filter(el=>el.id=='arm-time');let matchedEl=null;for(let i=0;i<10;i++){let d=new Date();d.setTime(new Date().getTime()+i*30*60*1000);let matchFn=getMatchFn(d);let els=allEls.filter(el=>matchFn(el.innerText.toUpperCase()));if(els.length){return els[0];}}
 return null;}
 function main(){let el=findSoonest();if(el){el.scrollIntoView();}else{alert('Could not find a meeting now');}}
-main();})();) ([src](https://github.com/spudtrooper/bookmarklets/blob/main/src/recent-remote-meetings.js)) - Scrolls to the soonest or most recent meetings in <a target="_" href="https://www.nyintergroup.org/remote-meetings/list/.">www.nyintergroup.org/remote-meetings/list/.</a>
+main();})();) ([src](https://github.com/spudtrooper/bookmarklets/blob/main/src/recent-remote-meetings.js)) - Scrolls to the soonest or most recent meetings in <a target="_" href="https://www.nyintergroup.org/remote-meetings/list/">www.nyintergroup.org/remote-meetings/list/</a>.
 
 *	[Hackernews Poll](javascript:(function(){const MAX_CHARS=75;function setStyle(el,style){for(var i in style){el.style[i]=style[i];}}
 function normalize(n,v,min,max,d){d=d||n/2;return Math.floor(n-d*(max-v)/(max-min));}
@@ -84,6 +84,6 @@ main();})();) ([src](https://github.com/spudtrooper/bookmarklets/blob/main/src/o
 *	[Twitter Like All](javascript:(function(){let divs=document.getElementsByTagName('div');let count=0;for(var i=0;i<divs.length;i++){let div=divs[i];if(div.getAttribute('aria-label')&&div.getAttribute('aria-label').match(/.*\. Like$/)){div.style.backgroundColor='#00ff00';div.click();count++;}}
 window.scrollTo(0,document.body.scrollHeight);console.log('Liked '+count+' tweets');})();) ([src](https://github.com/spudtrooper/bookmarklets/blob/main/src/twitter-like-all.js)) - Likes all the tweets on a twitter page, then scrolls to the bottom so you can resume.
 
-*	[Wikipedia Menu Hover](javascript:(function(){let toc=$('#toc');toc.css('position','fixed');toc.css('right','10px');toc.css('top','90px');toc.css('height','80%');toc.css('overflow','auto');toc.css('display','block');})();) ([src](https://github.com/spudtrooper/bookmarklets/blob/main/src/wikipedia-toc.js)) - Makes wikipedia menus hover and track with the page, e.g. <a target="_" href="https://imgur.com/a/N6kMzrg.">imgur.com/a/N6kMzrg.</a>
+*	[Wikipedia Menu Hover](javascript:(function(){let toc=$('#toc');toc.css('position','fixed');toc.css('right','10px');toc.css('top','90px');toc.css('height','80%');toc.css('overflow','auto');toc.css('display','block');})();) ([src](https://github.com/spudtrooper/bookmarklets/blob/main/src/wikipedia-toc.js)) - Makes wikipedia menus hover and track with the page, e.g. <a target="_" href="https://imgur.com/a/N6kMzrg">imgur.com/a/N6kMzrg</a>.
 
 		
