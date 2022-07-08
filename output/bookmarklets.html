@@ -180,6 +180,20 @@ main();})();">
           ) - Unfollows people in bulk, 25 at a time.
         </li>
         <li>
+          <a href="javascript:(function(){function findMeetings(){return Array.from(document.querySelectorAll('td[class="location"]')).filter(el=>
+            !!el.getAttribute('data-sort')).map(el=>{let m=el.getAttribute('data-sort').match(/(.*)-(\d+)-(\d+:\d+)$/);if(!m||m.length!=4)return;let div=el.querySelector('div[class="location-name"]'),title=div.innerHTML,key=m[1],num=m[2],time=m[3];return{key:key,num:num,time:time,title:title,};});}
+            function main(){let meetingsMap={};let meetings=findMeetings();meetings.forEach(m=>{meetingsMap[m.title]=m;});let nowHours=new Date().getHours();Array.from(document.querySelectorAll('div[role="button"')).filter(el=>el.getAttribute('title')&&el.getAttribute('title')==el.getAttribute('aria-label')).forEach(el=>{let title=el.getAttribute('title');let m=meetingsMap[title];if(!m){el.parentNode.removeChild(el);return;};let time=m.time,timeParts=time.split(':'),hours=parseInt(timeParts[0]),hoursDiff=hours-nowHours;console.log(hoursDiff,m);let src='http://maps.google.com/mapfiles/marker.png'
+            if(hoursDiff<=2){src='http://maps.google.com/mapfiles/marker_green.png';}else if(hoursDiff<=4){src='http://maps.google.com/mapfiles/marker_yellow.png';}
+            let img=el.querySelector('img');img.src=src;});}
+            main();})();">Meetings Map Color
+          </a>
+          (
+          <a target="_" href="https://github.com/spudtrooper/bookmarklets/blob/main/src/meetings-map-color.js">
+            src
+          </a>
+          ) - Color the markers of meetings map by upcoming time (e.g. green: <= 2h, yellow <= 4h, red: other)
+        </li>
+        <li>
           <a href="javascript:(function(){let clicks=0;const sleep=150;const longSleep=3000;let clickSign=()=>{let div=document.getElementsByClassName('request-signature__rows')[0];if(!div)return;if(!div.innerText.includes('I would like to follow user'))return;Array.from(document.getElementsByClassName('button')).filter((el)=>el.getAttribute('data-testid')&&el.getAttribute('data-testid')=='request-signature__sign').forEach((el)=>el.click());console.log('clicks:'+(++clicks));if(clicks%50==0){console.log('sleeping...');setTimeout(clickSign,longSleep);}else{setTimeout(clickSign,sleep);}};setTimeout(clickSign,5000);})();">
             Metamask Sign Auto
           </a>
@@ -293,7 +307,7 @@ window.scrollTo(0,document.body.scrollHeight);console.log('Liked '+count+' tweet
         Last updated:
         <b>
           <em>
-            Thu Jun  2 05:33:06 EDT 2022
+            Fri Jul  8 07:40:56 EDT 2022
           </em>
         </b>
       </p>
