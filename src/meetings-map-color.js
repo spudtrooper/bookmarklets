@@ -43,11 +43,11 @@
           hours = parseInt(timeParts[0]),
           hoursDiff = hours - nowHours;
         console.log(hoursDiff, m);
-        let src = 'http://maps.google.com/mapfiles/marker.png'
+        let src = '/' + '/maps.google.com/mapfiles/marker.png'
         if (hoursDiff <= 2) {
-          src = 'http://maps.google.com/mapfiles/marker_green.png';
+          src = '/' + '/maps.google.com/mapfiles/marker_green.png';
         } else if (hoursDiff <= 4) {
-          src = 'http://maps.google.com/mapfiles/marker_yellow.png';
+          src = '/' + '/maps.google.com/mapfiles/marker_yellow.png';
         }
         let img = el.querySelector('img');
         img.src = src;
