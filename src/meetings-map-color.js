@@ -7,10 +7,10 @@
 (function () {
 
   function findMeetings() {
-    return Array.from(document.querySelectorAll('td[class="location"]')).filter(el => !!el.getAttribute('data-sort')).map(el => {
+    return Array.from(document.querySelectorAll('td[class=\'location\']')).filter(el => !!el.getAttribute('data-sort')).map(el => {
       let m = el.getAttribute('data-sort').match(/(.*)-(\d+)-(\d+:\d+)$/);
       if (!m || m.length != 4) return;
-      let div = el.querySelector('div[class="location-name"]'),
+      let div = el.querySelector('div[class=\'location-name\']'),
         title = div.innerHTML,
         key = m[1], num = m[2], time = m[3];
       return {
@@ -30,8 +30,9 @@
       meetingsMap[m.title] = m;
     });
     let nowHours = new Date().getHours();
-    Array.from(document.querySelectorAll('div[role="button"'))
-      .filter(el => el.getAttribute('title') && el.getAttribute('title') == el.getAttribute('aria-label')).forEach(el => {
+    Array.from(document.querySelectorAll('div[role=\'button\''))
+      .filter(el => el.getAttribute('title') && el.getAttribute('title') == el.getAttribute('aria-label'))
+      .forEach(el => {
         let title = el.getAttribute('title');
         let m = meetingsMap[title];
         if (!m) {
