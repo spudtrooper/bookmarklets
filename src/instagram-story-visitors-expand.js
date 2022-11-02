@@ -22,10 +22,6 @@
     return res;
   }
 
-  function findName(t) {
-    return null;
-  }
-
   function doScroll(el, fn) {
     let titlesToInfo = {};
     let loop = (nextScrollHeight) => {
