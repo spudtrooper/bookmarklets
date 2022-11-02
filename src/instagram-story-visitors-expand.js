@@ -22,15 +22,8 @@
     return res;
   }
 
-  function findImage(t) {
-    let res;
-    Array.from(document.getElementsByTagName('img')).forEach((el) => {
-      if (el.alt && el.alt.startsWith(t) && el.alt.endsWith('profile picture')) {
-        res = el.src;
-        return;
-      }
-    });
-    return res;
+  function findName(t) {
+    return null;
   }
 
   function doScroll(el, fn) {
@@ -39,12 +32,22 @@
       Array.from(document.getElementsByTagName('a')).filter(el => {
         return el.getAttribute('role') == 'link' && el.href && el.href.match(/https:\/\/(www\.)?instagram\.com\/[a-z0-9]+\/?/);
       }).map(el => {
+        function findImage(t) {
+          let res;
+          Array.from(document.getElementsByTagName('img')).forEach((el) => {
+            if (el.alt && el.alt.startsWith(t) && el.alt.endsWith('profile picture')) {
+              res = el.src;
+              return;
+            }
+          });
+          return res;
+        }        
         let t = el.title;
         if (!t) {
           t = el.href.replace(/.*\.instagram.com\/?/, '').replace(/\//g, '');
         }
         let img = findImage(t);
-        let p = el.parentNode.parentNode.parentNode;
+        let p = el.parentNode.parentNode.parentNode.parentNode;
         let nameParts = p.innerText.split('\n'),
           name = nameParts[nameParts.length - 1];
         let verified = p.innerText.includes('Verified'),        
