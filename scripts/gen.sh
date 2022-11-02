@@ -12,8 +12,6 @@ args=(
     src
     --outfile_html
     output/bookmarklets.html
-    --outfile_md
-    output/bookmarklets.md
     --template_html_file
     templates/index.html
     --footer_html
