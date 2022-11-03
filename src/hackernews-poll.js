@@ -1,7 +1,7 @@
 /*
  * @Title: Hackernews Poll
  * @Description: Adds colored histograms to polls on news.ycombinator.org
- * @Image: http://imgur.com/8iPak
+ * @Image: http://imgur.com/8iPak.png
  */
 (function () {
 
