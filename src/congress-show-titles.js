@@ -1,7 +1,7 @@
 /*
  * @Title: Congress Show Titles
  * @Description: Shows a box with the titles of bills returned from a search on congress.gov
- * @Image: https://imgur.com/YrMc4Fk.png
+ * @Image: https://i.imgur.com/VuNazE9.png
  */
 (function () {
 

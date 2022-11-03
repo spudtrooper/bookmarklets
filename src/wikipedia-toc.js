@@ -1,7 +1,7 @@
 /*
  * @Title: Wikipedia Menu Hover
  * @Description: Makes wikipedia menus hover and track with the page.
- * @Image: https://imgur.com/N6kMzrg.png
+ * @Image: https://i.imgur.com/mx6s5Ws.png
  *
  */
 (function () {
