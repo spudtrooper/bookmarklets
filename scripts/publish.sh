@@ -18,7 +18,7 @@ if [[ "$@" != "" ]]; then
     scripts/commit.sh
     popd
 else
-    echo "Copied to $outdir...run the following to commit"
+    echo "To copy to $outdir...run the following to commit"
     echo
     echo "  pushd $outdir && scripts/commit.sh && popd"
     echo
