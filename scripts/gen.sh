@@ -4,6 +4,11 @@
 #
 set -e
 
+if ! command -v bookmarkletgen &> /dev/null; then
+    echo "bookmarkletgen not found. Run 'go install -v github.com/spudtrooper/bookmarkletgen@latest' to install."
+    exit 1
+fi
+
 mkdir -p output
 args=(
     --base_source_url
