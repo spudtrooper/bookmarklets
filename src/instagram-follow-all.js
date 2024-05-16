@@ -20,13 +20,13 @@
   }
 
   function expandDialog() {
-    const div = Array.from(document.querySelectorAll('div')).filter(el => el.style?.maxHeight === "400px")[0];
+    const div = Array.from(document.querySelectorAll('div')).filter(el => el.style?.maxHeight === '400px')[0];
     if (!div) return;
-    div.style.maxHeight = "1800px";
+    div.style.maxHeight = '1800px';
   }
 
   function click(btn) {
-    btn.style.backgroundColor = "green";
+    btn.style.backgroundColor = 'green';
     btn.click();
   }
 
