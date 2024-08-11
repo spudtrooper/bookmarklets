@@ -9,7 +9,7 @@
       alert('Could not find the article body');
       return;
     }
-    const links = article.querySelectorAll('a[href^="http"]');
+    const links = article.querySelectorAll(`a[href^='http\']`);
     const results = [];
     links.forEach(link => {
       const paragraph = link.closest('p');
@@ -31,7 +31,7 @@
     closeButton.textContent = 'Close';
     closeButton.style.cssText = ` position: fixed; top: 10px; right: 10px; padding: 5px 10px; background: white; color: black; border: none; cursor: pointer; `;
     closeButton.onclick = () => document.body.removeChild(overlay);
-    const content = results.map(item => ` <div style="margin-bottom: 20px;"> <a href="${item.link}" style="color: #58a6ff;">${item.link}</a> <p>${item.content}</p> </div> `).join('');
+    const content = results.map(item => ` <div style='margin-bottom: 20px;'> <a href='${item.link}' style='color: #58a6ff;'>${item.link}</a> <p>${item.content}</p> </div> `).join('');
     overlay.innerHTML = content;
     overlay.appendChild(closeButton);
     document.body.appendChild(overlay);
